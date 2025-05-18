@@ -46,8 +46,7 @@ public class UserController {
     @PostMapping(value = "/edit")
     public String updateUser(@RequestParam("updateId") Long updateId,
                              @RequestParam("user_name") String userName,
-                             @RequestParam("mail") String userMail
-    ) {
+                             @RequestParam("mail") String userMail) {
         userService.update(updateId, userName, userMail);
         return "redirect:/";
     }

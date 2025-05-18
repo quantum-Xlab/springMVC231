@@ -37,6 +37,11 @@ public class UserDaoImpl implements UserDao {
         if (!newMail.isBlank()) {updUser.setUserMail(newMail);}
      }
 
+    public User getUser(Long id) {
+        return entityManager.find(User.class, id);
+
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<User> listUsers() {

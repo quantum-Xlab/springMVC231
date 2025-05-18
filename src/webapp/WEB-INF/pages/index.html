@@ -38,31 +38,33 @@
             <th style="text-align: center">User name</th>
             <th style="text-align: center">User mail</th>
             <th style="text-align: center">Del</th>
+            <th style="text-align: center">Edit</th>
         </tr>
         <tr th:each ="user : ${users}">
             <td style="text-align:center" th:utext="${user.getUserId()}">...</td>
             <td th:utext="${user.getUserName()}">...</td>
             <td th:utext="${user.getUserMail()}">...</td>
-            <td><button name="del" form="delForm" type="submit" th:value="${user.getUserId()}">X</button></td>
+            <td><button name="del" form="delForm" type="submit"  th:value="${user.getUserId()}">X</button></td>
+            <td><button name="updateId" form="editForm" type="submit"  th:value="${user.getUserId()}">Edit</button></td>
         </tr>
     </table>
     <br>
     <form method="POST" id="create" action="/spring_mvc_war_exploded/" style="text-align: center;">
-        <p><b>Use ID field in case of UPDATE</b></p>
-        <label for="updateId" style="display: inline-block; width: 70px">User ID</label>
-        <input name="updateId" type="text" id="updateId">
-        <br>
+        <p><b>Add new user</b></p>
         <label for="user_name" style="display: inline-block; width: 70px">Name</label>
         <input name="user_name" type="text" id="user_name">
         <br>
         <label for="mail" style="display: inline-block; width: 70px">Email</label>
         <input name="mail" type="text" id="mail">
         <br>
-        <input type="submit" value="Add/update user">
+        <input type="submit" value="Add user">
 
     </form>
 
-    <form id="delForm" method="POST" >
+    <form id="delForm" method="POST" action="/spring_mvc_war_exploded/delete">
+    </form>
+
+    <form id="editForm" method="GET" action="/spring_mvc_war_exploded/edit">
     </form>
 
 

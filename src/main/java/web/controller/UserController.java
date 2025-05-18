@@ -28,22 +28,34 @@ public class UserController {
     }
 
     @PostMapping
-    public String addUsers(@RequestParam(value = "user_name", required = false) String userName,
-                           @RequestParam(value = "mail", required = false) String userMail,
-                           @RequestParam(value = "del", required = false) Long id,
-                           @RequestParam(value = "updateId", required = false) Long updateId,
-                           ModelMap model) {
-        List<User> users;
-        if (updateId != null && ((userName != null && !userName.isBlank()) || userMail != null)) {
-            userService.update(updateId, userName, userMail);
-        } else if (userName != null && !userName.isBlank() && userMail != null) {
-            userService.add(new User(userName, userMail));
-        } else if (id != null) {
-            userService.del(id);
-        }
-        users = userService.listUsers();
-        model.addAttribute("users", users);
-        return "index";
+    public String newUser(@RequestParam(value = "user_name") String userName,
+                          @RequestParam(value = "mail", required = false) String userMail) {
+        User user = new User(userName, userMail);
+        userService.add(user);
+        return "redirect:/";
+
+    }
+
+    @GetMapping(value = "/edit")
+    public String editUser(@RequestParam(value = "updateId") Long updateId, ModelMap model) {
+        User user = userService.getUser(updateId);
+        model.addAttribute("user", user);
+        return "/edit";
+    }
+
+    @PostMapping(value = "/edit")
+    public String updateUser(@RequestParam("updateId") Long updateId,
+                             @RequestParam("user_name") String userName,
+                             @RequestParam("mail") String userMail
+    ) {
+        userService.update(updateId, userName, userMail);
+        return "redirect:/";
+    }
+
+    @PostMapping(value = "/delete")
+    public String deleteUser(@RequestParam(value = "del") Long id) {
+        userService.del(id);
+        return "redirect:/";
     }
 
 }

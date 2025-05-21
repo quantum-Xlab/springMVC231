@@ -1,6 +1,5 @@
 package web.dao;
 
-import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
 import org.springframework.stereotype.Repository;
@@ -17,26 +16,24 @@ public class UserDaoImpl implements UserDao {
     private EntityManager entityManager;
 
     @Override
-    @Transactional
     public void add(User user) {
        entityManager.persist(user);
     }
 
     @Override
-    @Transactional
     public void del(Long id) {
         User user = entityManager.find(User.class, id);
         entityManager.remove(user);
     }
 
     @Override
-    @Transactional
-    public void update(Long id, String newName, String newMail) {
+     public void update(Long id, String newName, String newMail) {
         User updUser = entityManager.find(User.class, id);
         if (!newName.isBlank()) {updUser.setUserName(newName);};
         if (!newMail.isBlank()) {updUser.setUserMail(newMail);}
      }
 
+    @Override
     public User getUser(Long id) {
         return entityManager.find(User.class, id);
 
